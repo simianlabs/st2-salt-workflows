@@ -1,0 +1,7 @@
+---
+name: "pillar_refresh"
+description: "Workflow to refresh salt pillars"
+enabled: true
+entry_point: "workflows/refresh_pillar.yaml"
+
+runner_type: "mistral-v2"

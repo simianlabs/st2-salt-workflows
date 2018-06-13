@@ -1,0 +1,19 @@
+---
+name: "configure_saltmaster"
+action_ref: "myapp.configure_salt_master"
+description: "Apply configurations on SaltMaster using saltmanage.master from git pillar"
+formats:
+    - display: "Reconfigure saltmaster"
+      representation:
+        - "Reconfigure saltmaster"
+    - display: "Apply configuration to saltmaster"
+      representation:
+        - "Apply configuration to saltmaster"
+ack:
+    append_url: true
+result:
+  extra:
+    slack:
+      color: "#36a64f"
+  format:  |
+    I did my part.

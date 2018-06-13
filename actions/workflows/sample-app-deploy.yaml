@@ -1,0 +1,34 @@
+version: '2.0'
+
+myapp.sample-app-deploy:
+  description: Deployment of sample-app
+  type: direct
+  tasks:
+    Notify_start:
+      action: chatops.post_message
+      description: Slack notification about deployment start
+      input:
+        channel: chatops
+        message: Going to deploy myapp.sample-app
+      on-success:
+        - Deployment
+    Deployment:
+      action: salt.client
+      description: Deploy sample-app to tomcat using SaltStack
+      input:
+        module: state.apply
+        matches: {{ myapp-dev-node01 }}
+        args:
+          - myapp-deployed
+      publish:
+        result: <% task(Deployment).result %>
+      publish-on-error:
+        result: <% task(Deployment).result %>
+      on-success:
+        - Notify_end
+    Notify_end:
+      action: chatops.post_message
+      description: End of deployment notification to slack
+      input:
+        channel: chatops
+        message: Sample-app deployment finished

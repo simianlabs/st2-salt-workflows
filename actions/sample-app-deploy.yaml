@@ -1,0 +1,7 @@
+---
+description: Deploy artifacts to tomacat
+enabled: true
+runner_type: mistral-v2
+entry_point: workflows/sample-app-deploy.yaml
+name: sample-app-deploy
+pack: myapp

@@ -1,0 +1,21 @@
+---
+uid: 'rule:myapp:sample-app-deploy'
+enabled: true
+pack: myapp
+name: sample-app-deploy
+
+type:
+  ref: standard
+  parameters:
+
+
+
+trigger:
+  type: core.st2.webhook
+  parameters:
+    url: sample-app-deploy
+
+criteria:
+
+action:
+  ref: myapp.sample-app-deploy

@@ -1,0 +1,39 @@
+version: '2.0'
+
+myapp.sample-app-build:
+  description: Synch git repositories and kick in Jenkins build
+  type: direct
+  tasks:
+    Notify_start:
+      action: chatops.post_message
+      description: Slack notification about starting repo sync
+      input:
+        channel: chatops
+        message: Syncing repos for sample-app
+      on-success: 
+        - Git_sync
+    Git_sync:
+      action: core.local_sudo
+      description: Syncing central and project repos
+      input:
+        cmd: '/opt/scripts/git_sync_ssh.sh sample-app myapp'
+      publish:
+        stdout: <% task(Git_sync).result.stdout %>
+        stderr: <% task(Git_sync).result.stderr %>
+      publish-on-error:
+        stdout: <% task(Git_sync).result.stdout %>
+        stderr: <% task(Git_sync).result.stdout %>
+      on-success:
+        - Notify_build
+    Notify_build:
+      action: chatops.post_message
+      description: Sent notifiction to slack that build started
+      input:
+        channel: chatops
+        message: Repos for sample-app synced. Starting build in Jenkins
+      on-success:
+        - Jenkins_build
+    Jenkins_build:
+      action: jenkins.build_job
+      input:
+        project: sample-app

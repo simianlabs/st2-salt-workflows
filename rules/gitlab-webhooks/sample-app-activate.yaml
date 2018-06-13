@@ -1,0 +1,21 @@
+---
+uid: 'rule:myapp:sample-app-activate'
+pack: myapp
+enabled: true
+name: sample-app-activate
+
+type:
+  ref: standard
+  parameters:
+
+
+
+trigger:
+  type: core.st2.webhook
+  parameters:
+    url: sample-app-activate
+
+criteria:
+
+action:
+  ref: myapp.sample-app-build

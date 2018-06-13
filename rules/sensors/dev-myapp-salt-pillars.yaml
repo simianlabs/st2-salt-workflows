@@ -1,0 +1,23 @@
+---
+name: dev-myapp-salt-pillars
+pack: myapp
+enabled: true
+
+type:
+  ref: standard
+  parameters:
+
+trigger:
+  ref: git.head_sha_monitor
+  type: git.head_sha_monitor
+  parameters:
+
+criteria:
+  trigger.repository_url:
+    pattern: 'git@gitlab.com:myapp/dev-myapp-salt-pillars.git'
+    type: eq
+
+action:
+  ref: core.local
+  parameters:
+    cmd: '/opt/scripts/git_sync_ssh.sh dev-myappc-salt-pillars myapp-deploy'

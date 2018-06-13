@@ -1,0 +1,22 @@
+---
+uid: 'rule:myapp:refresh_pillars'
+enabled: true
+pack: myapp
+name: refresh_pillars
+
+type:
+  ref: standard
+  parameters:
+
+trigger:
+  type: core.st2.webhook
+  parameters:
+    url: hook-refresh-pillars
+
+criteria:
+  trigger.body.ref:
+        type: "equals"
+        pattern: "refs/heads/master"
+
+action:
+  ref: myapp.pillar_refresh

@@ -1,0 +1,34 @@
+---
+version: '2.0'
+
+default.pillar_refresh:
+  tasks:
+    wait_for_git:
+      # [235, 26]
+      action: core.pause
+      input:
+        max_pause: 20
+      on-success:
+        - refresh_pillars
+    refresh_pillars:
+      # [235, 128]
+      action: salt.client
+      input:
+        module: saltutil.refresh_pillar
+        matches: "*"
+      on-success:
+        - notify_slack
+      on-error:
+        - notify_slack_onfail
+    notify_slack:
+      # [105, 230]
+      action: chatops.post_message
+      input:
+        message: "Salt pillars refreshed"
+        channel: chatops
+    notify_slack_onfail:
+      # [365, 230]
+      action: chatops.post_message
+      input:
+        message: "Failed to refresh salt pillars"
+        channel: chatops

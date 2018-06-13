@@ -1,0 +1,10 @@
+# packs/my-chatops/aliases/remote.yaml
+---
+name: "sample-app-deployed"
+pack: "myapp"
+action_ref: "salt.client"
+description: "Deploy sample app using salt formula"
+formats:
+  - "update-site config na dev {{matches='myapp-salt-master'}} {{module='state.apply'}} {{args='myapp.deployed'}}"
+result:
+  format: "Done and dusted! {~} {{ execution.result }}"

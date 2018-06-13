@@ -1,0 +1,7 @@
+---
+description: Sync repositories and kick in Jenkins build for sample-app
+enabled: true
+runner_type: mistral-v2
+entry_point: workflows/sample-app-build.yaml
+name: sample-app-build
+pack: myapp

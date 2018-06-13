@@ -1,0 +1,20 @@
+---
+name: "status_salt"
+action_ref: "salt.client"
+description: "Show status of minions"
+formats:
+    - display: "Show me status of all minions"
+      representation:
+        - "Show me status of all minions {{matches='*'}} {{module=test.ping}}"
+ack:
+    format: "Let me check that with SaltMaster:)"
+    append_url: false
+result:
+  extra:
+    slack:
+      color: "#36a64f"
+  format:  |
+    It looks like this:
+    {% for host, result in execution.result.result.items() %}
+    `{{ host }} : {{ result }}`
+    {% endfor %}
